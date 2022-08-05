@@ -2,15 +2,32 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "aws_iam_role" "system_manger" {
-  name               = "SystemManagerRole"
-  assume_role_policy = data.aws_iam_policy_document.ec2.json
+resource "aws_iam_role" "role" {
+  name = "ssm-ec2"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
 
+  tags = {
+    Name = "ssm-ec2"
+  }
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
   name = "ssm-ec2"
-  role = aws_iam_role.system_manger.name
+  role = aws_iam_role.role.name
 }
 resource "aws_key_pair" "ssh_Key" {
   key_name    = "App-ssh-public-key"
