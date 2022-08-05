@@ -4,10 +4,26 @@ provider "aws" {
 
 resource "aws_iam_role" "system_manger" {
   name               = "SystemManagerRole"
-  assume_role_policy = file("assume_role_policy.json")
-  tags = {
-    Name = "SystemManagerRole"
+  assume_role_policy = <<EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Stmt1659718974871",
+        "Action": "ec2:*",
+        "Effect": "Allow",
+        "Resource": "arn:aws:ec2:*"
+      },
+      {
+        "Sid": "Stmt1659719011388",
+        "Action": "s3:*",
+        "Effect": "Allow",
+        "Resource": "arn:aws:s3:::*"
+      }
+    ]
   }
+EOF
+
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
