@@ -30,6 +30,9 @@ resource "aws_instance" "app" {
     volume_size           = var.app_volume_size
     delete_on_termination = "false"
   }
+  tags = {
+    Name = "app"
+  }
 }
 
 resource "aws_eip" "ec2_ip" {
