@@ -2,17 +2,12 @@ version: "3.9"
    
 services:
   web:
-    image: heezjee/rekognispa:v1
-    environment: 
-      - SECRET_KEY=${SECRET_KEY}
-      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
-      - S3_BUCKET_URL=${S3_BUCKET_URL}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+    image: ghcr.io/Asilbek99/rekognispa
+    env_file:
+      - .env
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     command: gunicorn config.wsgi --name=rekognispa --bind=0.0.0.0:8000 --workers=2
     volumes:
-      - .:/usr/share/webapps/rekognispa
+      - ./data/:/usr/share/webapps/rekognispa
     restart: unless-stopped
