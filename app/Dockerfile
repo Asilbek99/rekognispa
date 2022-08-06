@@ -2,6 +2,7 @@ ARG PROJECT_PATH=/usr/share/webapps/rekognispa
 FROM python:3
 ENV PYTHONUNBUFFERED=1
 ARG PROJECT_PATH
+ARG SECRET_KEY
 WORKDIR ${PROJECT_PATH}
 COPY requirements.txt ${PROJECT_PATH}
 RUN pip install -r requirements.txt

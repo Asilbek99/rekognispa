@@ -52,6 +52,8 @@ jobs:
           pull: true
           load: true
           tags: "ghcr.io/asilbek99/rekognispa:latest"
+          build-args: |
+            SECRET_KEY=${{ secrets.APP_SECRET_KEY }}
 
       - name: Push image (backend)
         run: docker push ${{ steps.set_tag_backend.outputs.tagged_image }}
