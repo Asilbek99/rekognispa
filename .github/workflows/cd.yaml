@@ -46,10 +46,7 @@ jobs:
           push: false
           pull: true
           load: true
-          builder: ${{ steps.buildx.outputs.name }}
           tags: "ghcr.io/asilbek99/rekognispa:latest"
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
           build-args: |
             AWS_ACCESS_KEY_ID=${{ secrets.APP_AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY=${{ secrets.APP_AWS_SECRET_ACCESS_KEY }}
@@ -57,14 +54,6 @@ jobs:
             S3_BUCKET_NAME=app-s3-id-43343
             S3_BUCKET_URL="https://app-s3-id-43343.s3.ca-central-1.amazonaws.com"
             SECRET_KEY=${{ secrets.APP_SECRET_KEY }}
-            
-
-      - name: Move cache
-        if: ${{ success() || (failure() && steps.build_backend.outcome == 'failure') }}
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
 
       - name: Push image (backend)
         run: docker push ${{ steps.set_tag_backend.outputs.tagged_image }}
