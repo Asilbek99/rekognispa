@@ -79,8 +79,11 @@ resource "aws_s3_bucket" "bucket" {
 
 }
 
-resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = aws_s3_bucket.bucket.id
-
-  policy = file("s3_policy.json")
+resource "aws_iam_policy" "user_policy" {
+  name        = "${var.bucket_name}_policy"
+  policy      = data.aws_iam_policy_document.user_policy.json
+}
+resource "aws_iam_user_policy_attachment" "attach" {
+  user       = aws_iam_user.user.name
+  policy_arn = aws_iam_policy.user_policy.arn
 }

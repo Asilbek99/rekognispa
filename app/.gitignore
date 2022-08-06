@@ -141,3 +141,4 @@ cython_debug/
 */migrations/*
 .vscode/launch.json
 data/db/
+.env

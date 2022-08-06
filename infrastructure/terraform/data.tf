@@ -11,3 +11,10 @@ data "aws_ami" "ubuntu" {
   }
   owners = ["099720109477"]
 }
+data "aws_iam_policy_document" "user_policy" {
+  statement {
+    actions   = ["s3:*"]
+    resources = [aws_s3_bucket.bucket.arn]
+    effect = "Allow"
+  }
+}
