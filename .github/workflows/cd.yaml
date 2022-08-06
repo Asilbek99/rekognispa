@@ -54,6 +54,12 @@ jobs:
           tags: "ghcr.io/asilbek99/rekognispa:latest"
           build-args: |
             SECRET_KEY=${{ secrets.APP_SECRET_KEY }}
+            AWS_ACCESS_KEY_ID=${{ secrets.APP_AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY=${{ secrets.APP_AWS_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION=ca-central-1
+            S3_BUCKET_NAME=app-s3-id-43343
+            S3_BUCKET_URL="https://app-s3-id-43343.s3.ca-central-1.amazonaws.com"
+  
 
       - name: Push image (backend)
         run: docker push ${{ steps.set_tag_backend.outputs.tagged_image }}
