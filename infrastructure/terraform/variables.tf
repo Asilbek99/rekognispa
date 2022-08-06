@@ -17,3 +17,7 @@ variable "app_volume_size" {
   description = "app server volume size"
   default     = 10
 }
+variable "bucket_name" {
+  type = string
+  default = "app_s3"
+}

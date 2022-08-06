@@ -64,3 +64,23 @@ resource "aws_security_group" "ec2_sg" {
   }
 
 }
+
+resource "aws_iam_user" "user" {
+  name = "srv_${var.bucket_name}"
+}
+
+resource "aws_iam_access_key" "user_keys" {
+  user = aws_iam_user.user.name
+}
+
+resource "aws_s3_bucket" "bucket" {
+  bucket        = var.bucket_name
+  force_destroy = "true"
+
+}
+
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.bucket.id
+
+  policy = file("s3_policy.json")
+}
