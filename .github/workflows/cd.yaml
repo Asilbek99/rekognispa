@@ -47,7 +47,7 @@ jobs:
           pull: true
           load: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: "ghcr.io/Asilbek99/rekognispa"
+          tags: "ghcr.io/Asilbek99/rekognispa:latest"
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
           build-args: |
