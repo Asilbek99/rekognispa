@@ -2,12 +2,12 @@ version: "3.9"
    
 services:
   web:
-    image: ghcr.io/Asilbek99/rekognispa
+    image: ghcr.io/asilbek99/rekognispa:latest
     env_file:
-      - .env
+      - ./.env
     ports:
-      - "127.0.0.1:8000:8000"
-    command: gunicorn config.wsgi --name=rekognispa --bind=0.0.0.0:8000 --workers=2
-    volumes:
-      - ./data/:/usr/share/webapps/rekognispa
+      - "8000:8000"
+    command: ["bash", "-c", "gunicorn config.wsgi --name=rekognispa --bind=0.0.0.0:8000 --workers=2"]
+#    volumes:
+#      - ./data/:/usr/share/webapps/rekognispa
     restart: unless-stopped

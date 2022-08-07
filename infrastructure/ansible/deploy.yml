@@ -1,0 +1,29 @@
+---
+---
+- name: Deploy
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: Login to registry
+      shell:
+        cmd: docker login ghcr.io -u {{ docker_username }} -p {{ docker_pass }}
+
+    - name: Replace Image tag
+      replace:
+        path: /var/www/rekognispa/docker-compose.yaml
+        regexp: 'master-.*-.*'
+        replace: "{{image_tag}}"
+
+    - name: Pull Image
+      shell:
+        cmd: docker-compose pull
+
+    - name: Restart docker compose
+      shell:
+        cmd: docker-compose up --force-recreate  -d
+        chdir: "/var/www/rekognispa/"
+
+    - name: Logout from registry
+      shell:
+        cmd: docker logout ghcr.io
