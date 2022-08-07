@@ -17,10 +17,14 @@
     - name: Pull Image
       shell:
         cmd: docker-compose pull
+      args:
+        chdir: /var/www/rekognispa/
 
     - name: Restart docker compose
       shell:
-        cmd: cd /var/www/rekognispa/ && docker-compose up --force-recreate  -d
+        cmd: docker-compose up --force-recreate  -d
+      args:
+        chdir: /var/www/rekognispa/
 
     - name: Logout from registry
       shell:
