@@ -21,7 +21,8 @@
     - name: Restart docker compose
       shell:
         cmd: docker-compose up --force-recreate  -d
-        chdir: "/var/www/rekognispa/"
+      args:
+        chdir: /var/www/rekognispa/
 
     - name: Logout from registry
       shell:
