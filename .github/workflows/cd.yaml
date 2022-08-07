@@ -81,6 +81,6 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           options: |
             --inventory host
-            --extra-vars image_tag=${{ TAG }}
+            --extra-vars image_tag=${{ env.TAG }}
             --extra-vars docker_username=${{ github.actor }} 
             --extra-vars docker_pass=${{ secrets.GITHUB_TOKEN }}
